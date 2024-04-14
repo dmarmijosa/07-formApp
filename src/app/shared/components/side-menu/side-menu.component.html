@@ -1,0 +1,18 @@
+<h2>Páginas</h2>
+<hr />
+<h3 class="mt-3">Reactive</h3>
+<ul class="list-group">
+  @for (item of reactiveMenu; track $index) {
+  <li class="list-group-item pe-auto" routerLinkActive="active" [routerLink]="[item.route]">
+    {{ item.title }}
+  </li>
+  }
+</ul>
+<h3 class="mt-3">Validaciones</h3>
+<ul class="list-group">
+  @for (item of authMenu; track $index) {
+  <li class="list-group-item pe-auto" routerLinkActive="active" [routerLink]="[item.route]">
+    {{ item.title }}
+  </li>
+  }
+</ul>
