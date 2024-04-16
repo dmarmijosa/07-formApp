@@ -11,7 +11,9 @@
         formControlName="name"
         placeholder="Nombre de la persona"
       />
-      <span class="form-text text-danger"> error message </span>
+      <span *ngIf="isValidField('name')" class="form-text text-danger">
+        {{ getFielError("name") }}
+      </span>
     </div>
   </div>
 
@@ -20,11 +22,25 @@
     <label class="col-sm-3 col-form-label">Agregar</label>
     <div class="col-sm-9">
       <div class="input-group">
-        <input class="form-control" placeholder="Agregar favorito" />
-        <button class="btn btn-outline-primary" type="button">
+        <input
+          [formControl]="newFavorite"
+          class="form-control"
+          placeholder="Agregar favorito"
+        />
+        <button
+          (click)="onAddToFavorites()"
+          class="btn btn-outline-primary"
+          type="button"
+        >
           Agregar favorito
         </button>
       </div>
+      <span
+        *ngIf="newFavorite.getError('required') && newFavorite.touched"
+        class="form-text text-danger"
+      >
+        Este campo es requerido
+      </span>
     </div>
   </div>
 
@@ -37,9 +53,20 @@
         <div class="input-group">
           <input [formControlName]="$index" class="form-control" />
 
-          <button class="btn btn-outline-danger" type="button">Eliminar</button>
+          <button
+            class="btn btn-outline-danger"
+            (click)="onDeleteFavorite($index)"
+            type="button"
+          >
+            Eliminar
+          </button>
         </div>
-        <span class="form-text text-danger"> Este campo es requerido </span>
+        <span
+          *ngIf="isValidFieldInArray(favoriteGames, $index)"
+          class="form-text text-danger"
+        >
+          Este campo es requerido
+        </span>
       </div>
       }
     </div>
@@ -64,5 +91,5 @@
 <br />
 
 <span>Agregar Juego</span>
-<pre>{{ "object" | json }}</pre>
-<pre>{{ "object" | json }}</pre>
+<pre>{{ newFavorite.value| json }}</pre>
+<pre>{{ newFavorite.errors| json }}</pre>
