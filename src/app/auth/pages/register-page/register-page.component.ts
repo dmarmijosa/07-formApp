@@ -14,23 +14,33 @@ export class RegisterPageComponent {
   private validatorService = inject(ValidatorsService);
   private emailValidator = inject(EmailValidatorsService);
 
-  myForm: FormGroup = this.fb.group({
-    name: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(this.validatorService.firstNameAndLastnamePattern),
+  myForm: FormGroup = this.fb.group(
+    {
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(this.validatorService.firstNameAndLastnamePattern),
+        ],
       ],
-    ],
-    email: [
-      '',
-      [Validators.required, Validators.pattern(emailPattern)],
-      [this.emailValidator],
-    ],
-    username: ['', [Validators.required, this.validatorService.cantBeStrider]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-    password2: ['', [Validators.required]],
-  });
+      email: [
+        '',
+        [Validators.required, Validators.pattern(emailPattern)],
+        [this.emailValidator],
+      ],
+      username: [
+        '',
+        [Validators.required, this.validatorService.cantBeStrider],
+      ],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      password2: ['', [Validators.required]],
+    },
+    {
+      validators: [
+        this.validatorService.isFieldOneEqualFieldTwo('password', 'password2'),
+      ],
+    }
+  );
 
   isValidField(field: string) {
     return this.validatorService.isValidField(this.myForm, field);
